@@ -5,14 +5,19 @@ public class Widget extends Thread {
     // 4) Assuming no exception, strings.length() == 0 at the end of main.
     public static List<String> strings = new ArrayList<String>();
 
-    // 3) Assuming no exception, w.count == 1,000 for all w.
+    // 3) Assuming no exception, w.count == 1,001 for all w.
     public int count;
 
+    // 2) Accesses to the numbers list are safe because they require the list's
+    //    lock.
     public List<Integer> numbers;
 
     public Widget() {
-        // 3) Assuming no exception, w.count == 1,000 for all w.
+        // 3) Assuming no exception, w.count == 1,001 for all w.
         count = 0;
+
+        // 2) Accesses to the numbers list are safe because they require the
+        //    list's lock.
         numbers = new ArrayList<Integer>();
     }
 
@@ -20,7 +25,7 @@ public class Widget extends Thread {
     public void run() {
         for (int i = 0; i < 1000; ++i) {
             synchronized (this) {
-                // 3) Assuming no exception, w.count == 1,000 for all w.
+                // 3) Assuming no exception, w.count == 1,001 for all w.
                 count++;
                 synchronized (numbers) {
                     // 2) Accesses to the numbers list are safe because they
@@ -52,7 +57,7 @@ public class Widget extends Thread {
             w.start();
         }
 
-        // Loop through each widget, increment count, add "1,000" to numbers.
+        // Loop through each widget, increment count, add "1,001" to numbers.
         for (Widget w : widgets) {
             synchronized (w) {
                 // 3) Assuming no exception, w.count == 1,001 for all w.
