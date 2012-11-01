@@ -47,7 +47,7 @@ public class Widget extends Thread {
      */
     public static void main(String[] args) throws InterruptedException {
         // 1) Accesses to the widgets list are safe because the list is confined
-        //    to the mian thread.
+        //    to the main thread.
 
         // Create and start 1,000 widgets and keep them in a list.
         List<Widget> widgets = new ArrayList<Widget>();
@@ -57,7 +57,7 @@ public class Widget extends Thread {
             w.start();
         }
 
-        // Loop through each widget, increment count, add "1,001" to numbers.
+        // Loop through each widget, increment count, add "1,000" to numbers.
         for (Widget w : widgets) {
             synchronized (w) {
                 // 3) Assuming no exception, w.count == 1,001 for all w.
